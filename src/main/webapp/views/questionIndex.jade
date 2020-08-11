@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        title Question Base
+    body
+        table
+            tr
+                td id
+                td author
+                td text
+                td created
+                td answers
+            each question in questions
+                tr
+                    td #{question.id}
+                    td #{question.author}
+                    td #{question.text}
+                    td #{question.creationTime}

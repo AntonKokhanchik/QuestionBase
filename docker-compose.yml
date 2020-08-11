@@ -1,0 +1,27 @@
+version: "3.5"
+
+secrets:
+  postgres_password:
+    file: ./postgres-password.txt
+
+services:
+  postgres:
+    image: "postgres:10.5"
+    container_name: "postgres-container"
+    volumes:
+      - ./src/main/resources/dbscripts:/docker-entrypoint-initdb.d
+    hostname: "postgres"
+    restart: always
+    networks:
+      - common-network
+    secrets:
+      - postgres_password
+    environment:
+      UPDATE_HOSTNAME: "true"
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    ports:
+      - 5432:5432
+      
+networks:
+  common-network:
+    name: common-network
