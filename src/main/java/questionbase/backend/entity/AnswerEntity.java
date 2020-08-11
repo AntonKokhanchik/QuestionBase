@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name="ANSWERS")
 public class AnswerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String author;
     private String text;

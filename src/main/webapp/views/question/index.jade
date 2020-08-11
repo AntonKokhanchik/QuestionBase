@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    table
+        tr
+            td id
+            td author
+            td text
+            td created
+            td
+            td
+            td
+        each question in questions
+            tr
+                td #{question.id}
+                td #{question.author}
+                td #{question.text}
+                td #{question.creationTime}
+                td: a(href="/question/show/#{question.id}") show
+                td: a(href="/question/update/#{question.id}") update
+                td: form(action="/question/delete/#{question.id}" method="post")
+                    input(type="submit" value="delete")
+    a(href="/question/new") new

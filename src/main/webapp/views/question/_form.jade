@@ -1,0 +1,9 @@
+input#id(type='hidden', name='id' value=question.id)
+
+label(for='author') Author
+input#author(type='text', name='author' value=question.author)
+
+label(for='text') Text
+textarea#text(name='text') #{question.text}
+
+button(type='submit') Save
