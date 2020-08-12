@@ -7,4 +7,4 @@ block content
     h2 Answers
     each answer in answers
         include ../answer/_card
-    a.btn.btn-primary.ml-5(href="/answer/new") New answer
+    a.btn.btn-primary.ml-5(href="/answer/new?questionId=#{question.id}") New answer

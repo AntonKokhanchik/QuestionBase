@@ -1,6 +1,8 @@
 package questionbase.backend.service;
 
 import com.github.dozermapper.core.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import questionbase.backend.entity.AnswerEntity;
@@ -9,6 +11,7 @@ import questionbase.backend.repository.QuestionRepository;
 import questionbase.frontend.dto.Answer;
 import questionbase.frontend.dto.Question;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -16,29 +19,39 @@ import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionServiceImpl.class);
+
     @Autowired
     QuestionRepository questionRepository;
+
     @Autowired
     Mapper mapper;
 
+    @PostConstruct
+    public void initialize() {
+        LOG.info("Question service online");
+    }
 
     @Override
     @Transactional
     public void create(Question question) {
         question.setCreationTime(LocalDateTime.now());
-        questionRepository.save(mapper.map(question, QuestionEntity.class));
+        QuestionEntity e = questionRepository.save(mapper.map(question, QuestionEntity.class));
+        LOG.info("Question created {}", e);
     }
 
     @Override
     @Transactional
     public void update(Question question) {
-        questionRepository.save(mapper.map(question, QuestionEntity.class));
+        QuestionEntity e = questionRepository.save(mapper.map(question, QuestionEntity.class));
+        LOG.info("Question updated {}", e);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
         questionRepository.deleteById(id);
+        LOG.info("Question deleted by id {}", id);
     }
 
     @Override
@@ -48,7 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> findAll() {
-        List<QuestionEntity> entities = questionRepository.findAll();
+        Iterable<QuestionEntity> entities = questionRepository.findAll();
         List<Question> questions = new LinkedList<>();
 
         for (QuestionEntity e : entities)

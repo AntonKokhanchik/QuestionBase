@@ -12,6 +12,13 @@ public class Answer {
     private LocalDateTime creationTime;
     private Question question;
 
+    public Answer() { }
+
+    public Answer(String author, String text) {
+        this.author = author;
+        this.text = text;
+    }
+
     public Long getId() {
         return id;
     }

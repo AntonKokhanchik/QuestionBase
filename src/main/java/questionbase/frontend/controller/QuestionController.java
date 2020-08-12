@@ -22,7 +22,7 @@ public class QuestionController {
         return "question/index";
     }
 
-    @GetMapping(value="show/{id}")
+    @GetMapping(value="/show/{id}")
     public String getShow(@PathVariable("id") Long id, Model model) {
         model.addAttribute("question", questionService.find(id));
         model.addAttribute("answers", questionService.findAnswersByQuestionId(id));
