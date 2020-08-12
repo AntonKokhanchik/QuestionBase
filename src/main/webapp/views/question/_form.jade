@@ -1,9 +1,10 @@
 input#id(type='hidden', name='id' value=question.id)
 
-label(for='author') Author
-input#author(type='text', name='author' value=question.author)
+.form-group
+    label(for='author') Author
+    input#author.form-control(type='text', name='author' value=question.author)
+.form-group
+    label(for='text') Text
+    textarea#text.form-control(name='text') #{question.text}
 
-label(for='text') Text
-textarea#text(name='text') #{question.text}
-
-button(type='submit') Save
+button.btn.btn-success(type='submit') Save

@@ -1,29 +1,10 @@
 extends ../layout
 
 block content
-    h3 Question, Id: #{question.id}
-    h4 Author: #{question.author}
-    h4 Text:
-    p #{question.text}
-    h4 Created: #{question.creationTime}
-    h4 Answers:
-    table
-        tr
-            td Id
-            td Author
-            td Text
-            td Created
-            td
-            td
-            td
-        each answer in answers
-            tr
-                td #{answer.id}
-                td #{answer.author}
-                td #{answer.text}
-                td #{answer.creationTime}
-                td: a(href="/answer/show/#{question.id}") show
-                td: a(href="/answer/update/#{question.id}") update
-                td: form(action="/answer/delete/#{question.id}" method="post")
-                    input(type="submit" value="delete")
-    a(href="/answer/new") new
+    h2 Question ##{question.id}
+    include _card
+
+    h2 Answers
+    each answer in answers
+        include ../answer/_card
+    a.btn.btn-primary.ml-5(href="/answer/new") New answer

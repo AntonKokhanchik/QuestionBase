@@ -1,0 +1,9 @@
+.border.rounded.p-3.mb-2
+    h4 ##{question.id} #{question.author}
+    p #{question.text}
+    .text-muted.text-right: #{question.creationTime}
+    .row
+        a.btn.btn-info.mx-2(href="/question/show/#{question.id}") Show
+        a.btn.btn-warning.mx-2(href="/question/update/#{question.id}") Update
+        form(action="/question/delete/#{question.id}" method="post")
+            button.btn.btn-danger.mx-2(type="submit") Delete
