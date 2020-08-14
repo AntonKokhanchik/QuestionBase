@@ -1,0 +1,13 @@
+input#id(type='hidden', name='id', value=answer.id)
+
+.form-group
+    label(for='text') Text
+    textarea#text.form-control(name='text') #{answer.text}
+
+.form-group
+    input.form-check-input(id="isRight" name="isRight" value=answer.isRight type="checkbox" checked=answer.isRight)
+    label.form-check-label(for="answer#{answer.id}") Is right?
+
+input#questionId(type="hidden", name="questionId", value=questionId)
+
+button.btn.btn-success(type='submit') Save

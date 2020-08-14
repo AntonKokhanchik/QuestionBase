@@ -1,7 +1,6 @@
 package questionbase.backend.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,11 +10,12 @@ public class QuestionEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private String author;
     private String text;
-    private LocalDateTime creationTime;
     @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommentEntity> comments = new LinkedList<>();
+    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<AnswerEntity> answers = new LinkedList<>();
+    private Boolean isMulti;
 
     public Long getId() {
         return id;
@@ -25,28 +25,12 @@ public class QuestionEntity {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(LocalDateTime creationTime) {
-        this.creationTime = creationTime;
     }
 
     public List<CommentEntity> getComments() {
@@ -67,14 +51,39 @@ public class QuestionEntity {
         comments.remove(comment);
     }
 
+    public List<AnswerEntity> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerEntity> answers) {
+        this.answers = answers;
+    }
+
+    public void addAnswer(AnswerEntity answer) {
+        answers.add(answer);
+        answer.setQuestion(this);
+    }
+    public void removeAnswer(AnswerEntity answer) {
+        answer.setQuestion(null);
+        answers.remove(answer);
+    }
+
+    public Boolean getMulti() {
+        return isMulti;
+    }
+
+    public void setMulti(Boolean multi) {
+        isMulti = multi;
+    }
+
     @Override
     public String toString() {
         return "QuestionEntity{" +
                 "id=" + id +
-                ", author='" + author + '\'' +
                 ", text='" + text + '\'' +
-                ", creationTime=" + creationTime +
                 ", comments=" + comments +
+                ", answers=" + answers +
+                ", isMulti=" + isMulti +
                 '}';
     }
 }

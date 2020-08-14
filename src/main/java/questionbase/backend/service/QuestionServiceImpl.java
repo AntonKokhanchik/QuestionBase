@@ -5,15 +5,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import questionbase.backend.entity.AnswerEntity;
 import questionbase.backend.entity.CommentEntity;
 import questionbase.backend.entity.QuestionEntity;
 import questionbase.backend.repository.QuestionRepository;
+import questionbase.frontend.dto.Answer;
 import questionbase.frontend.dto.Comment;
 import questionbase.frontend.dto.Question;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +36,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public void create(Question question) {
-        question.setCreationTime(LocalDateTime.now());
         QuestionEntity e = questionRepository.save(mapper.map(question, QuestionEntity.class));
         LOG.info("Question created {}", e);
     }
@@ -83,5 +83,20 @@ public class QuestionServiceImpl implements QuestionService {
             comments.add(mapper.map(e, Comment.class));
 
         return comments;
+    }
+
+    @Override
+    public List<Answer> findAnswersByQuestionId(Long id) {
+        QuestionEntity question = questionRepository.findById(id).orElse(null);
+        if (question == null)
+            return new LinkedList<>();
+
+        List<AnswerEntity> entities = question.getAnswers();
+        List<Answer> answers = new LinkedList<>();
+
+        for (AnswerEntity e : entities)
+            answers.add(mapper.map(e, Answer.class));
+
+        return answers;
     }
 }

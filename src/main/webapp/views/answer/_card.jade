@@ -1,0 +1,13 @@
+.px-3.mb-2.ml-3
+    .row
+        .form-check
+            input.form-check-input(id="answer#{answer.id}" name="question#{question.id}" value=answer.id
+                                   type=question.multi==true?"checkbox":"radio")
+            label.form-check-label(for="answer#{answer.id}") #{i}. #{answer.text}
+
+        a.btn.btn-warning.btn-sm.mx-2(href="/answer/update/#{answer.id}") Update
+        form(action="/answer/delete/#{answer.id}", method="post",
+                onsubmit="return confirm('Are you want to delete this answer?')")
+            button.btn.btn-danger.btn-sm.mx-2(type="submit") Delete
+
+        .text-muted.text-right: ##{answer.id}, is #{answer.right}

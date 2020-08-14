@@ -1,5 +1,6 @@
 package questionbase.backend.service;
 
+import questionbase.frontend.dto.Answer;
 import questionbase.frontend.dto.Comment;
 import questionbase.frontend.dto.Question;
 
@@ -12,4 +13,5 @@ public interface QuestionService {
     Question find(Long id);
     List<Question> findAll();
     List<Comment> findCommentsByQuestionId(Long id);
+    List<Answer> findAnswersByQuestionId(Long id);
 }

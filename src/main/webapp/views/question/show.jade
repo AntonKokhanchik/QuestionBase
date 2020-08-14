@@ -5,7 +5,7 @@ block content
     - hideShowButton = true
     include _card
 
-    h2 Answers
+    h2 Comments
     each comment in comments
         include ../comment/_card
     a.btn.btn-primary.ml-5(href="/comment/new?questionId=#{question.id}") New comment

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import questionbase.backend.service.AnswerService;
 import questionbase.backend.service.QuestionService;
 import questionbase.frontend.dto.Question;
 
@@ -14,17 +15,22 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    AnswerService answerService;
+
     // GET
 
     @GetMapping
     public String getIndex(Model model) {
         model.addAttribute("questions", questionService.findAll());
+        model.addAttribute("answers", answerService.findAll());
         return "question/index";
     }
 
     @GetMapping(value="/show/{id}")
     public String getShow(@PathVariable("id") Long id, Model model) {
         model.addAttribute("question", questionService.find(id));
+        model.addAttribute("answers", questionService.findAnswersByQuestionId(id));
         model.addAttribute("comments", questionService.findCommentsByQuestionId(id));
         return  "question/show";
     }
@@ -59,7 +65,7 @@ public class QuestionController {
             @RequestParam String text) {
         Question question = questionService.find(id);
 
-        question.setAuthor(author);
+//        question.setAuthor(author);
         question.setText(text);
         questionService.update(question);
 

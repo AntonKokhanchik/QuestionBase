@@ -1,7 +1,9 @@
 .border.rounded.p-3.mb-2
     h4 ##{question.id} #{question.author}
     p #{question.text}
-    .text-muted.text-right: =question.creationTimeFormatted
+    each answer, i in answers
+        if answer.question.id == question.id
+            include ../answer/_card
     .row
         if hideShowButton != true
             a.btn.btn-info.mx-2(href="/question/show/#{question.id}") Show
