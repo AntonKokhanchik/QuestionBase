@@ -4,6 +4,7 @@ import org.apache.maven.surefire.shade.org.apache.commons.lang3.builder.EqualsBu
 import org.apache.maven.surefire.shade.org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Question {
     private Long id;
@@ -44,6 +45,10 @@ public class Question {
 
     public LocalDateTime getCreationTime() {
         return creationTime;
+    }
+
+    public String getCreationTimeFormatted() {
+        return creationTime.format(DateTimeFormatter.ofPattern("E, dd MMM yyyy, HH:mm"));
     }
 
     public void setCreationTime(LocalDateTime creationTime) {
