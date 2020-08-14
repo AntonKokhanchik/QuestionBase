@@ -25,7 +25,7 @@ public class QuestionController {
     @GetMapping(value="/show/{id}")
     public String getShow(@PathVariable("id") Long id, Model model) {
         model.addAttribute("question", questionService.find(id));
-        model.addAttribute("answers", questionService.findAnswersByQuestionId(id));
+        model.addAttribute("comments", questionService.findCommentsByQuestionId(id));
         return  "question/show";
     }
 

@@ -15,7 +15,7 @@ public class QuestionEntity {
     private String text;
     private LocalDateTime creationTime;
     @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<AnswerEntity> answers = new LinkedList<>();
+    private List<CommentEntity> comments = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -49,22 +49,22 @@ public class QuestionEntity {
         this.creationTime = creationTime;
     }
 
-    public List<AnswerEntity> getAnswers() {
-        return answers;
+    public List<CommentEntity> getComments() {
+        return comments;
     }
 
-    public void setAnswers(List<AnswerEntity> answers) {
-        this.answers = answers;
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
     }
 
-    public void addAnswer(AnswerEntity answer) {
-        answers.add(answer);
-        answer.setQuestion(this);
+    public void addComment(CommentEntity comment) {
+        comments.add(comment);
+        comment.setQuestion(this);
     }
 
-    public void removeAnswer(AnswerEntity answer) {
-        answer.setQuestion(null);
-        answers.remove(answer);
+    public void removeComment(CommentEntity comment) {
+        comment.setQuestion(null);
+        comments.remove(comment);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class QuestionEntity {
                 ", author='" + author + '\'' +
                 ", text='" + text + '\'' +
                 ", creationTime=" + creationTime +
-                ", answers=" + answers +
+                ", comments=" + comments +
                 '}';
     }
 }

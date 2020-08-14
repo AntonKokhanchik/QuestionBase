@@ -1,11 +1,11 @@
-input#id(type='hidden', name='id', value=answer.id)
+input#id(type='hidden', name='id', value=comment.id)
 
 .form-group
     label(for='author') Author
-    input#author.form-control(type='text', name='author', value=answer.author)
+    input#author.form-control(type='text', name='author', value=comment.author)
 .form-group
     label(for='text') Text
-    textarea#text.form-control(name='text') #{answer.text}
+    textarea#text.form-control(name='text') #{comment.text}
 
 input#questionId(type="hidden", name="questionId", value=questionId)
 

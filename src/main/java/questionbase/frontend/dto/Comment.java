@@ -6,16 +6,16 @@ import org.apache.maven.surefire.shade.org.apache.commons.lang3.builder.HashCode
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Answer {
+public class Comment {
     private Long id;
     private String author;
     private String text;
     private LocalDateTime creationTime;
     private Question question;
 
-    public Answer() { }
+    public Comment() { }
 
-    public Answer(String author, String text) {
+    public Comment(String author, String text) {
         this.author = author;
         this.text = text;
     }
@@ -70,13 +70,13 @@ public class Answer {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Answer answer = (Answer) o;
+        Comment comment = (Comment) o;
 
         return new EqualsBuilder()
-                .append(id, answer.id)
-                .append(author, answer.author)
-                .append(text, answer.text)
-                .append(creationTime, answer.creationTime)
+                .append(id, comment.id)
+                .append(author, comment.author)
+                .append(text, comment.text)
+                .append(creationTime, comment.creationTime)
                 .isEquals();
     }
 
@@ -92,7 +92,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "AnswerDTO{" +
+        return "CommentDTO{" +
                 "id=" + id +
                 ", author='" + author + '\'' +
                 ", text='" + text + '\'' +

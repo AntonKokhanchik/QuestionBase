@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="ANSWERS")
-public class AnswerEntity {
+@Table(name="COMMENTS")
+public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,12 +58,12 @@ public class AnswerEntity {
 
     @Override
     public String toString() {
-        return "AnswerEntity{" +
+        return "CommentEntity{" +
                 "id=" + id +
                 ", author='" + author + '\'' +
                 ", text='" + text + '\'' +
                 ", creationTime=" + creationTime +
-                ", question=" + question.getText() +
+                ", question=" + question.getId() +
                 '}';
     }
 }

@@ -4,28 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import questionbase.backend.service.AnswerService;
-import questionbase.frontend.dto.Answer;
+import questionbase.backend.service.CommentService;
+import questionbase.frontend.dto.Comment;
 
 @Controller
-@RequestMapping(value = {"/answer"})
-public class AnswerController {
+@RequestMapping(value = {"/comment"})
+public class CommentController {
     @Autowired
-    AnswerService answerService;
+    CommentService commentService;
 
     // GET
 
     @GetMapping(value="/new")
     String getNew(@RequestParam Long questionId, Model model) {
-        model.addAttribute("answer", new Answer());
+        model.addAttribute("comment", new Comment());
         model.addAttribute("questionId", questionId);
-        return "answer/new";
+        return "comment/new";
     }
 
     @GetMapping(value="/update/{id}")
     String getUpdate(@PathVariable Long id, Model model){
-        model.addAttribute("answer", answerService.find(id));
-        return "answer/update";
+        model.addAttribute("comment", commentService.find(id));
+        return "comment/update";
     }
 
     // POST
@@ -34,7 +34,7 @@ public class AnswerController {
     String postNew(@RequestParam String author,
                    @RequestParam String text,
                    @RequestParam Long questionId) {
-       answerService.create(new Answer(author, text), questionId);
+       commentService.create(new Comment(author, text), questionId);
        return "redirect:/question/show/" + questionId;
     }
 
@@ -42,19 +42,19 @@ public class AnswerController {
     String postUpdate(@RequestParam Long id,
                       @RequestParam String author,
                       @RequestParam String text) {
-        Answer answer = answerService.find(id);
+        Comment comment = commentService.find(id);
 
-        answer.setAuthor(author);
-        answer.setText(text);
-        answerService.update(answer);
+        comment.setAuthor(author);
+        comment.setText(text);
+        commentService.update(comment);
 
-        return "redirect:/question/show/" + answer.getQuestion().getId();
+        return "redirect:/question/show/" + comment.getQuestion().getId();
     }
 
     @PostMapping(value="/delete/{id}")
     String postDelete(@PathVariable Long id) {
-        Long questionId = answerService.find(id).getQuestion().getId();
-        answerService.delete(id);
+        Long questionId = commentService.find(id).getQuestion().getId();
+        commentService.delete(id);
         return "redirect:/question/show/" + questionId;
     }
 }
