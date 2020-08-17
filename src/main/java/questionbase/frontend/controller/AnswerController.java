@@ -32,7 +32,7 @@ public class AnswerController {
 
     @PostMapping(value="/new")
     String postNew(@RequestParam String text,
-                   @RequestParam Boolean isRight,
+                   @RequestParam(defaultValue = "false") Boolean isRight,
                    @RequestParam Long questionId) {
         answerService.create(new Answer(text, isRight), questionId);
         return "redirect:/question/show/" + questionId;
@@ -41,7 +41,7 @@ public class AnswerController {
     @PostMapping(value="/update")
     String postUpdate(@RequestParam Long id,
                       @RequestParam String text,
-                      @RequestParam boolean isRight) {
+                      @RequestParam(defaultValue = "false") Boolean isRight) {
         Answer answer = answerService.find(id);
 
         answer.setRight(isRight);

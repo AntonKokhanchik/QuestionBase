@@ -49,8 +49,12 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void update(Comment comment) {
-        CommentEntity e = commentRepository.save(mapper.map(comment, CommentEntity.class));
-        LOG.info("Comment updated {}", e);
+        commentRepository.findById(comment.getId()).ifPresent(c -> {
+            c.setAuthor(comment.getAuthor());
+            c.setText(comment.getText());
+            CommentEntity savedEntity = commentRepository.save(c);
+            LOG.info("Comment updated {}", savedEntity);
+        });
     }
 
     @Override

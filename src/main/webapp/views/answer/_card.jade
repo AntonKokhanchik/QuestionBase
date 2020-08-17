@@ -3,7 +3,7 @@
         .form-check
             input.form-check-input(id="answer#{answer.id}" name="question#{question.id}" value=answer.id
                                    type=question.multi==true?"checkbox":"radio")
-            label.form-check-label(for="answer#{answer.id}") #{i}. #{answer.text}
+            label.form-check-label(for="answer#{answer.id}") #{n}. #{answer.text}
 
         a.btn.btn-warning.btn-sm.mx-2(href="/answer/update/#{answer.id}") Update
         form(action="/answer/delete/#{answer.id}", method="post",

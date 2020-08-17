@@ -1,9 +1,14 @@
 .border.rounded.p-3.mb-2
     h4 ##{question.id} #{question.author}
     p #{question.text}
-    each answer, i in answers
+
+    - n = 1
+    each answer in answers
         if answer.question.id == question.id
             include ../answer/_card
+            - n++
+    a.btn.btn-primary.mb-2(href="/answer/new?questionId=#{question.id}") New answer
+
     .row
         if hideShowButton != true
             a.btn.btn-info.mx-2(href="/question/show/#{question.id}") Show

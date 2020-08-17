@@ -12,7 +12,6 @@ import questionbase.frontend.dto.Answer;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,8 +47,12 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     @Transactional
     public void update(Answer answer) {
-        AnswerEntity e = answerRepository.save(mapper.map(answer, AnswerEntity.class));
-        LOG.info("Answer updated {}", e);
+        answerRepository.findById(answer.getId()).ifPresent(a -> {
+            a.setText(answer.getText());
+            a.setRight(answer.getRight());
+            AnswerEntity savedEntity = answerRepository.save(a);
+            LOG.info("Answer updated {}", savedEntity);
+        });
     }
 
     @Override

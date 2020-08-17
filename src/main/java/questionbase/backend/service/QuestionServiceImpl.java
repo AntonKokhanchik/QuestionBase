@@ -43,8 +43,12 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public void update(Question question) {
-        QuestionEntity e = questionRepository.save(mapper.map(question, QuestionEntity.class));
-        LOG.info("Question updated {}", e);
+       questionRepository.findById(question.getId()).ifPresent(q -> {
+           q.setText(question.getText());
+           q.setMulti(question.getMulti());
+           QuestionEntity savedEntity = questionRepository.save(q);
+           LOG.info("Question updated {}", savedEntity);
+       });
     }
 
     @Override

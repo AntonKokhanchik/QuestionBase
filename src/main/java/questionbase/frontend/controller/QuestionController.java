@@ -51,9 +51,9 @@ public class QuestionController {
 
     @PostMapping(value="/new")
     public String postNew(
-            @RequestParam String author,
-            @RequestParam String text) {
-        questionService.create(new Question(author, text));
+            @RequestParam String text,
+            @RequestParam(defaultValue = "false") Boolean isMulti) {
+        questionService.create(new Question(text, isMulti));
 
         return "redirect:/";
     }
@@ -61,12 +61,12 @@ public class QuestionController {
     @PostMapping(value="/update")
     public String postUpdate(
             @RequestParam Long id,
-            @RequestParam String author,
-            @RequestParam String text) {
+            @RequestParam String text,
+            @RequestParam(defaultValue = "false") Boolean isMulti) {
         Question question = questionService.find(id);
 
-//        question.setAuthor(author);
         question.setText(text);
+        question.setMulti(isMulti);
         questionService.update(question);
 
         return "redirect:/";
