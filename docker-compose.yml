@@ -8,8 +8,6 @@ services:
   postgres:
     image: "postgres:10.5"
     container_name: "postgres-container"
-    volumes:
-      - ./src/main/resources/dbscripts:/docker-entrypoint-initdb.d
     hostname: "postgres"
     restart: always
     networks:
