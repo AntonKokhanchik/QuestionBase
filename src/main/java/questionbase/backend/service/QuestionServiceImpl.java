@@ -36,8 +36,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public void create(Question question) {
-        QuestionEntity e = questionRepository.save(mapper.map(question, QuestionEntity.class));
-        LOG.info("Question created {}", e);
+        QuestionEntity savedEntity = questionRepository.save(mapper.map(question, QuestionEntity.class));
+        LOG.info("Question created {}", savedEntity);
     }
 
     @Override

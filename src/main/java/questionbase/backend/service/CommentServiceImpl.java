@@ -41,8 +41,8 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity commentEntity = mapper.map(comment, CommentEntity.class);
         questionRepository.findById(questionId).ifPresent(q -> {
             commentEntity.setQuestion(q);
-            CommentEntity savedEntitiy = commentRepository.save(commentEntity);
-            LOG.info("Comment created {}", savedEntitiy);
+            CommentEntity savedEntity = commentRepository.save(commentEntity);
+            LOG.info("Comment created {}", savedEntity);
         });
     }
 
