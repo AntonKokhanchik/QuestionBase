@@ -10,6 +10,7 @@ import questionbase.backend.repository.AnswerRepository;
 import questionbase.backend.repository.CommentRepository;
 import questionbase.backend.repository.QuestionRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class DatabaseSeed implements CommandLineRunner {
     CommentRepository commentRepository;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         questionRepository.deleteAll();
         Random random = new Random();
@@ -33,24 +35,20 @@ public class DatabaseSeed implements CommandLineRunner {
             q.setMulti(random.nextBoolean());
             q = questionRepository.save(q);
 
-            int rights = 0;
             for (int j = 0; j < random.nextInt(4)+2; j++) {
                 AnswerEntity a = new AnswerEntity();
                 a.setText("Answer number " + (j+1) + " for question " + (i+1));
-                if (q.getMulti()) {
+
+                if(j == 1)
+                    a.setRight(true);
+                else if (q.getMulti())
                     a.setRight(random.nextBoolean());
-                    rights++;
-                }
                 else
-                    a.setRight(j == 1);
+                    a.setRight(false);
+
                 a.setQuestion(q);
                 answerRepository.save(a);
             }
-
-            if (!q.getMulti() && rights == 0)
-                questionRepository.findById(q.getId()).ifPresent(q1 -> {
-                   q1.getAnswers().get(random.nextInt(q1.getAnswers().size())).setRight(true);
-                });
 
             for (int j = 0; j < random.nextInt(5) - 2; j++) {
                 CommentEntity c = new CommentEntity();
