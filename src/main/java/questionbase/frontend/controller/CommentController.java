@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import questionbase.backend.service.CommentService;
 import questionbase.frontend.dto.Comment;
+import questionbase.frontend.dto.User;
 
 @Controller
 @RequestMapping(value = {"/comment"})
+@SessionAttributes("sessionUser")
 public class CommentController {
     @Autowired
     CommentService commentService;
@@ -31,20 +33,22 @@ public class CommentController {
     // POST
 
     @PostMapping(value="/new")
-    String postNew(@RequestParam String author,
+    String postNew(@RequestParam String authorName,
                    @RequestParam String text,
-                   @RequestParam Long questionId) {
-       commentService.create(new Comment(author, text), questionId);
-       return "redirect:/question/show/" + questionId;
+                   @RequestParam Long questionId,
+                   Model model) {
+        User sessionUser = (User) model.getAttribute("sessionUser");
+        commentService.create(new Comment(authorName, text), questionId, sessionUser.getLogin());
+        return "redirect:/question/show/" + questionId;
     }
 
     @PostMapping(value="/update")
     String postUpdate(@RequestParam Long id,
-                      @RequestParam String author,
+                      @RequestParam String authorName,
                       @RequestParam String text) {
         Comment comment = commentService.find(id);
 
-        comment.setAuthor(author);
+        comment.setAuthorName(authorName);
         comment.setText(text);
         commentService.update(comment);
 

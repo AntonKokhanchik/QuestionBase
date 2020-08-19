@@ -8,15 +8,16 @@ import java.time.format.DateTimeFormatter;
 
 public class Comment {
     private Long id;
-    private String author;
+    private String authorName;
     private String text;
     private LocalDateTime creationTime;
     private Question question;
+    private User author;
 
     public Comment() { }
 
-    public Comment(String author, String text) {
-        this.author = author;
+    public Comment(String authorName, String text) {
+        this.authorName = authorName;
         this.text = text;
     }
 
@@ -28,12 +29,14 @@ public class Comment {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        if (author == null || author.getFullName() == null)
+            return authorName + " <Guest>";
+        return authorName + " <" + author.getFullName() + '>';
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getText() {
@@ -64,6 +67,14 @@ public class Comment {
         this.question = question;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,7 +85,7 @@ public class Comment {
 
         return new EqualsBuilder()
                 .append(id, comment.id)
-                .append(author, comment.author)
+                .append(authorName, comment.authorName)
                 .append(text, comment.text)
                 .append(creationTime, comment.creationTime)
                 .isEquals();
@@ -84,7 +95,7 @@ public class Comment {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
-                .append(author)
+                .append(authorName)
                 .append(text)
                 .append(creationTime)
                 .toHashCode();
@@ -94,9 +105,9 @@ public class Comment {
     public String toString() {
         return "CommentDTO{" +
                 "id=" + id +
-                ", author='" + author + '\'' +
+                ", author='" + getAuthorName() + '\'' +
                 ", text='" + text + '\'' +
-                ", creationTime=" + creationTime +
+                ", creationTime=" + getCreationTimeFormatted() +
                 ", question=" + question.getId() +
                 '}';
     }

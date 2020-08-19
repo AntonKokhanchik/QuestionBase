@@ -11,6 +11,7 @@ import questionbase.frontend.dto.Question;
 
 @Controller
 @RequestMapping(value = {"/", "/question"})
+@SessionAttributes("sessionUser")
 public class QuestionController {
     @Autowired
     QuestionService questionService;

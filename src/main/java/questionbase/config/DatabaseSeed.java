@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 import questionbase.backend.entity.AnswerEntity;
 import questionbase.backend.entity.CommentEntity;
 import questionbase.backend.entity.QuestionEntity;
+import questionbase.backend.entity.UserEntity;
 import questionbase.backend.repository.AnswerRepository;
 import questionbase.backend.repository.CommentRepository;
 import questionbase.backend.repository.QuestionRepository;
+import questionbase.backend.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -22,6 +24,8 @@ public class DatabaseSeed implements CommandLineRunner {
     AnswerRepository answerRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     @Transactional
@@ -52,12 +56,19 @@ public class DatabaseSeed implements CommandLineRunner {
 
             for (int j = 0; j < random.nextInt(5) - 2; j++) {
                 CommentEntity c = new CommentEntity();
-                c.setAuthor("Some author with strange digit name " + random.nextInt(999999));
+                c.setAuthorName("Some author with strange digit name " + random.nextInt(999999));
                 c.setText("Some awesome comment with number " + (j+1) + " for question " + (i+1));
                 c.setCreationTime(LocalDateTime.now());
                 c.setQuestion(q);
                 commentRepository.save(c);
             }
+
+            UserEntity admin = new UserEntity();
+            admin.setLogin("admin");
+            admin.setPassword("admin");
+            admin.setFullName("System administrator");
+            admin.setAdmin(true);
+            userRepository.save(admin);
         }
     }
 }

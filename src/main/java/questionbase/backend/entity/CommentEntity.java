@@ -9,12 +9,15 @@ public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String author;
+    private String authorName;
     private String text;
     private LocalDateTime creationTime;
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     private QuestionEntity question;
+    @ManyToOne
+    @JoinColumn(name = "author_login", referencedColumnName = "login")
+    private UserEntity author;
 
     public Long getId() {
         return id;
@@ -24,12 +27,12 @@ public class CommentEntity {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getText() {
@@ -56,11 +59,19 @@ public class CommentEntity {
         this.question = question;
     }
 
+    public UserEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+    }
+
     @Override
     public String toString() {
         return "CommentEntity{" +
                 "id=" + id +
-                ", author='" + author + '\'' +
+                ", authorName='" + authorName + '\'' +
                 ", text='" + text + '\'' +
                 ", creationTime=" + creationTime +
                 ", question=" + question.getId() +

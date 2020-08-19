@@ -7,7 +7,20 @@ html
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
         title Question Base
     body
-        .container.mb-4
+        header.navbar
+            a.navbar-brand(href="/") Question Base
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(href="/test/random") Random test
+            nav.navbar-nav
+                if sessionUser == null
+                    include user/_login_form
+                else
+                    form(action="/user/logout" method="post")
+                        .navbar-brand Hello, #{sessionUser.fullName}
+                        button.btn.btn-warning(type="submit") Logout
+
+        main.container.mb-4
             block content
 
         script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")

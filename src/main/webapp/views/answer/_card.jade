@@ -5,9 +5,10 @@
                                    type=question.multi==true?"checkbox":"radio")
             label.form-check-label(for="answer#{answer.id}") #{n}. #{answer.text}
 
-        a.btn.btn-warning.btn-sm.mx-2(href="/answer/update/#{answer.id}") Update
-        form(action="/answer/delete/#{answer.id}", method="post",
-                onsubmit="return confirm('Are you want to delete this answer?')")
-            button.btn.btn-danger.btn-sm.mx-2(type="submit") Delete
+        if sessionUser.admin == true && isQuestionShow == true
+            a.btn.btn-warning.btn-sm.mx-2(href="/answer/update/#{answer.id}") Update
+            form(action="/answer/delete/#{answer.id}", method="post",
+                    onsubmit="return confirm('Are you want to delete this answer?')")
+                button.btn.btn-danger.btn-sm.mx-2(type="submit") Delete
 
-        .text-muted.text-right: ##{answer.id}, is #{answer.right}
+            .text-muted.text-right: ##{answer.id}, is #{answer.right}

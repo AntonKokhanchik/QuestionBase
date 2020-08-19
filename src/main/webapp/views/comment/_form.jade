@@ -1,8 +1,8 @@
 input#id(type='hidden', name='id', value=comment.id)
 
 .form-group
-    label(for='author') Author
-    input#author.form-control(type='text', name='author', value=comment.author)
+    label(for='authorName') Author name
+    input#authorName.form-control(type='text', name='authorName', value=comment.authorName)
 .form-group
     label(for='text') Text
     textarea#text.form-control(name='text') #{comment.text}

@@ -9,6 +9,7 @@ import questionbase.frontend.dto.Answer;
 
 @Controller
 @RequestMapping(value = {"/answer"})
+@SessionAttributes("sessionUser")
 public class AnswerController {
     @Autowired
     AnswerService answerService;

@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import questionbase.backend.entity.CommentEntity;
+import questionbase.backend.entity.UserEntity;
 import questionbase.backend.repository.CommentRepository;
 import questionbase.backend.repository.QuestionRepository;
+import questionbase.backend.repository.UserRepository;
 import questionbase.frontend.dto.Comment;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +29,9 @@ public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     Mapper mapper;
 
     @PostConstruct
@@ -36,9 +41,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void create(Comment comment, Long questionId) {
+    public void create(Comment comment, Long questionId, String authorLogin) {
         comment.setCreationTime(LocalDateTime.now());
         CommentEntity commentEntity = mapper.map(comment, CommentEntity.class);
+        commentEntity.setAuthor(userRepository.findById(authorLogin).orElse(null));
+
         questionRepository.findById(questionId).ifPresent(q -> {
             commentEntity.setQuestion(q);
             CommentEntity savedEntity = commentRepository.save(commentEntity);
@@ -50,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void update(Comment comment) {
         commentRepository.findById(comment.getId()).ifPresent(c -> {
-            c.setAuthor(comment.getAuthor());
+            c.setAuthorName(comment.getAuthorName());
             c.setText(comment.getText());
             CommentEntity savedEntity = commentRepository.save(c);
             LOG.info("Comment updated {}", savedEntity);
